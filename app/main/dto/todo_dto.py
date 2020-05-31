@@ -10,3 +10,13 @@ class TodoDto:
         'completion_date': fields.DateTime(required=False, description='completeion date of task'),
         'user_id': fields.String(description='user who creates this task')
     })
+
+    todoUpdate = api.model('todo', {
+        'id': fields.String(required=True, description='id of a task'),
+        'title': fields.String(required=True, description='title of task'),
+        'completion_status': fields.Boolean(required=False, description='completion status of task'),
+        'description': fields.String(required=True, description='task description'),
+        'due_date': fields.DateTime(required=True, description='due date of taks'),
+        'completion_date': fields.DateTime(required=False, description='completeion date of task'),
+        'user_id': fields.String(description='user who creates this task')
+    })
