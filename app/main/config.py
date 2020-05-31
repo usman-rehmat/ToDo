@@ -25,6 +25,8 @@ class DevelopmentConfig(Config):
     MAIL_USE_SSL = False
     MAIL_USERNAME = 'usman.rehmat.me@gmail.com'
     MAIL_PASSWORD = 'Usman270'
+    CACHE_TYPE = 'simple'
+    CACHE_DEFAULT_TIMEOUT = 300
 
 
 class TestingConfig(Config):

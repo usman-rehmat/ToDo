@@ -9,8 +9,6 @@ from app.main.model.User import User
 
 api = UserDto.api
 
-
-
 @api.route('/signup')
 class CreateTask(Resource):
     """
@@ -75,3 +73,13 @@ class UserLogin(Resource):
         post_data = request.json
         print(post_data)
         return user_service.login_user(data=post_data)
+
+@api.route('/task_reminder')
+class TaskReminder(Resource):
+    """
+        Task Reminder
+    """
+    @api.doc('Task reminder')
+    def get(self):
+        # get the post data
+        return user_service.sendReminderEmail()

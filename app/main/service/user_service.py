@@ -1,11 +1,13 @@
 from flask import render_template, url_for
 from itsdangerous import URLSafeTimedSerializer
-from datetime import datetime
 from app.main import db, get_mail
 from app.main.model.User import User
 from flask_mail import Message
 from app.main import app
-from app.main.model.User import User
+from app.main.model.Todo import Todo
+import datetime as dt
+from datetime import datetime, date
+
 import os
 
 def create(data):
@@ -77,6 +79,20 @@ def confirmedEmail(user):
     user.email_confirmed_on = datetime.now()
     save_changes(user)
 
+def sendReminderEmail():
+    """ sendReminderEmail """
+    today_date = date.today()
+    start_time = datetime.min.time()
+    today_datetime = datetime.combine(today_date,start_time)
+    next_day = today_datetime + dt.timedelta(days=1)
+    tasks = Todo.query.filter(Todo.due_date < next_day).filter(Todo.due_date >= today_datetime).all()
+    print(tasks)
+    for task in tasks:
+        user =User.query.filter(User.id == task.user_id).first()
+        html = render_template("reminder_email.html", title=task.title)
+        send_email(user.email,"Pending tasks", html)
+    return True
+
 def login_user(data):
     try:
         # fetch the user data
@@ -84,6 +100,7 @@ def login_user(data):
         if user and user.check_password(data.get('password')):
             auth_token = User.encode_auth_token(user.id)
             if auth_token:
+                app.logger.info('User logged in successfully')
                 response_object = {
                     'status': 'success',
                     'message': 'Successfully logged in.',
