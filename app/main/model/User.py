@@ -11,9 +11,13 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
-    public_id = db.Column(db.String(100), unique=True)
+    authenticated = db.Column(db.Boolean, default=False, nullable=True)
+    email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
+    email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
+    email_confirmed_on = db.Column(db.DateTime, nullable=True)
     password_hash = db.Column(db.String(100))
     tasks = db.relationship("Todo")
+
     @property
     def password(self):
         raise AttributeError('password: write-only field')

@@ -10,10 +10,10 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(255), unique=False, nullable=False)
     created_on = db.Column(db.DateTime, nullable=False)
-    completion_status = db.Column(db.Boolean, nullable=False, default=False)
+    completion_status = db.Column(db.Boolean, nullable=True, default=False)
     due_date = db.Column(db.DateTime, nullable=False)
-    completion_date = db.Column(db.DateTime, nullable=False)
-    file_url = db.Column(db.String(255), unique=False, nullable=False)
+    completion_date = db.Column(db.DateTime, nullable=True)
+    file_url = db.Column(db.String(255), unique=False, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 

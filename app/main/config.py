@@ -4,10 +4,11 @@ import os
 # postgres_local_base = os.environ['DATABASE_URL']
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
+os.environ['EMAIL_VERIFIER_KEY'] = 'at_PEwsnUYOFdJAnygO4fCCsEJNSExQP'
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'my_precious_secret_key')
+    EMAIL_VERIFIER_KEY = os.getenv('EMAIL_VERIFIER_KEY', 'at_PEwsnUYOFdJAnygO4fCCsEJNSExQP')
     DEBUG = False
 
 
@@ -17,6 +18,13 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql://root:root@localhost/todo'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECURITY_PASSWORD_SALT = 'my_precious_token'
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = 'usman.rehmat.me@gmail.com'
+    MAIL_PASSWORD = 'Usman270'
 
 
 class TestingConfig(Config):
@@ -40,3 +48,4 @@ config_by_name = dict(
 )
 
 key = Config.SECRET_KEY
+email_verifier_key = Config.EMAIL_VERIFIER_KEY
