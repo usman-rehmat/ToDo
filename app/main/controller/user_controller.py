@@ -10,7 +10,7 @@ from app.main.model.User import User
 api = UserDto.api
 
 @api.route('/signup')
-class CreateTask(Resource):
+class CreateUser(Resource):
     """
         Signup Resource
     """
